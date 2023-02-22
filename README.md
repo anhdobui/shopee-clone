@@ -95,58 +95,58 @@ Tạo file `.eslintrc.cjs` tại thư mục root
 const path = require('path')
 
 module.exports = {
-  extends: [
-    // Chúng ta sẽ dùng các rule mặc định từ các plugin mà chúng ta đã cài.
-    'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
-    'plugin:jsx-a11y/recommended',
-    'plugin:@typescript-eslint/recommended',
-    // Disable các rule mà eslint xung đột với prettier.
-    // Để cái này ở dưới để nó override các rule phía trên!.
-    'eslint-config-prettier',
-    'prettier'
-  ],
-  plugins: ['prettier'],
-  settings: {
-    react: {
-      // Nói eslint-plugin-react tự động biết version của React.
-      version: 'detect'
-    },
-    // Nói ESLint cách xử lý các import
-    'import/resolver': {
-      node: {
-        paths: [path.resolve(__dirname, '')],
-        extensions: ['.js', '.jsx', '.ts', '.tsx']
-      }
-    }
-  },
-  env: {
-    node: true
-  },
-  rules: {
-    // Tắt rule yêu cầu import React trong file jsx
-    'react/react-in-jsx-scope': 'off',
-    // Cảnh báo khi thẻ <a target='_blank'> mà không có rel="noreferrer"
-    'react/jsx-no-target-blank': 'warn',
-    // Tăng cường một số rule prettier (copy từ file .prettierrc qua)
-    'prettier/prettier': [
-      'warn',
-      {
-        arrowParens: 'always',
-        semi: false,
-        trailingComma: 'none',
-        tabWidth: 2,
-        endOfLine: 'auto',
-        useTabs: false,
-        singleQuote: true,
-        printWidth: 120,
-        jsxSingleQuote: true
-      }
-    ]
-  }
+	extends: [
+		// Chúng ta sẽ dùng các rule mặc định từ các plugin mà chúng ta đã cài.
+		'eslint:recommended',
+		'plugin:react/recommended',
+		'plugin:react-hooks/recommended',
+		'plugin:import/recommended',
+		'plugin:import/typescript',
+		'plugin:jsx-a11y/recommended',
+		'plugin:@typescript-eslint/recommended',
+		// Disable các rule mà eslint xung đột với prettier.
+		// Để cái này ở dưới để nó override các rule phía trên!.
+		'eslint-config-prettier',
+		'prettier'
+	],
+	plugins: ['prettier'],
+	settings: {
+		react: {
+			// Nói eslint-plugin-react tự động biết version của React.
+			version: 'detect'
+		},
+		// Nói ESLint cách xử lý các import
+		'import/resolver': {
+			node: {
+				paths: [path.resolve(__dirname, '')],
+				extensions: ['.js', '.jsx', '.ts', '.tsx']
+			}
+		}
+	},
+	env: {
+		node: true
+	},
+	rules: {
+		// Tắt rule yêu cầu import React trong file jsx
+		'react/react-in-jsx-scope': 'off',
+		// Cảnh báo khi thẻ <a target='_blank'> mà không có rel="noreferrer"
+		'react/jsx-no-target-blank': 'warn',
+		// Tăng cường một số rule prettier (copy từ file .prettierrc qua)
+		'prettier/prettier': [
+			'warn',
+			{
+				arrowParens: 'always',
+				semi: false,
+				trailingComma: 'none',
+				tabWidth: 2,
+				endOfLine: 'auto',
+				useTabs: false,
+				singleQuote: true,
+				printWidth: 120,
+				jsxSingleQuote: true
+			}
+		]
+	}
 }
 ```
 
@@ -161,15 +161,15 @@ Tạo file `.prettierrc`
 
 ```json
 {
-  "arrowParens": "always",
-  "semi": false,
-  "trailingComma": "none",
-  "tabWidth": 2,
-  "endOfLine": "auto",
-  "useTabs": false,
-  "singleQuote": true,
-  "printWidth": 120,
-  "jsxSingleQuote": true
+	"arrowParens": "always",
+	"semi": false,
+	"trailingComma": "none",
+	"tabWidth": 2,
+	"endOfLine": "auto",
+	"useTabs": false,
+	"singleQuote": true,
+	"printWidth": 120,
+	"jsxSingleQuote": true
 }
 ```
 
@@ -220,11 +220,11 @@ Cấu hình file config
 ```js
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  theme: {
-    extend: {}
-  },
-  plugins: []
+	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+	theme: {
+		extend: {}
+	},
+	plugins: []
 }
 ```
 
@@ -253,18 +253,18 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000
-  },
-  css: {
-    devSourcemap: true
-  },
-  resolve: {
-    alias: {
-      src: path.resolve(__dirname, './src')
-    }
-  }
+	plugins: [react()],
+	server: {
+		port: 3000
+	},
+	css: {
+		devSourcemap: true
+	},
+	resolve: {
+		alias: {
+			src: path.resolve(__dirname, './src')
+		}
+	}
 })
 ```
 
@@ -297,11 +297,8 @@ Code xóa các ký tự đặc biệt trên bàn phím
 
 ```ts
 export const removeSpecialCharacter = (str: string) =>
-  // eslint-disable-next-line no-useless-escape
-  str.replace(
-    /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
-    ''
-  )
+	// eslint-disable-next-line no-useless-escape
+	str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, '')
 ```
 
 Sữa lỗi Tailwindcss Extension không gợi ý class
@@ -310,7 +307,7 @@ Các bạn thêm đoạn code này vào `settings.json` của VS Code
 
 ```json
 {
-  //...
-  "tailwindCSS.experimental.classRegex": ["[a-zA-Z]*class[a-zA-Z]*='([^']+)'"]
+	//...
+	"tailwindCSS.experimental.classRegex": ["[a-zA-Z]*class[a-zA-Z]*='([^']+)'"]
 }
 ```
