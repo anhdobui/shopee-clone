@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import Input from 'src/component/Input'
 import { getRules } from 'src/utils/validate'
 interface FormLogin {
 	email: string
@@ -23,25 +24,24 @@ function Login() {
 					<div className="lg:col-span-2 lg:col-start-4">
 						<form className="rounded bg-white p-10 shadow-sm" onSubmit={onSubmit} noValidate>
 							<div className="text-2xl">Đăng nhập</div>
-							<div className="mt-8">
-								<input
-									type="email"
-									className="w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm"
-									placeholder="Email"
-									{...register('email', rules.email)}
-								/>
-								<div className="mt-1 min-h-[1rem] text-sm text-red-600">{errors.email?.message}</div>
-							</div>
-							<div className="mt-3">
-								<input
-									type="password"
-									autoComplete="current-password"
-									className="w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm"
-									placeholder="Password"
-									{...register('password', rules.password)}
-								/>
-								<div className="mt-1 min-h-[1rem] text-sm text-red-600">{errors.password?.message}</div>
-							</div>
+							<Input
+								className="mt-8"
+								name="email"
+								register={register}
+								errorMessage={errors.email?.message}
+								rules={rules.email}
+								placeholder="Email"
+								type="email"
+							/>
+							<Input
+								className="mt-2"
+								name="password"
+								register={register}
+								errorMessage={errors.password?.message}
+								rules={rules.password}
+								placeholder="Password"
+								type="password"
+							/>
 							<div className="mt-3">
 								<button
 									type="submit"

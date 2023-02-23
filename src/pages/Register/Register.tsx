@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import Input from 'src/component/Input'
 import { getRules } from 'src/utils/validate'
 interface FormData {
 	email: string
@@ -25,36 +26,35 @@ function Register() {
 					<div className="lg:col-span-2 lg:col-start-4">
 						<form className="rounded bg-white p-10 shadow-sm" onSubmit={onSubmit} noValidate>
 							<div className="text-2xl">Đăng ký</div>
-							<div className="mt-8">
-								<input
-									type="email"
-									className="w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm"
-									placeholder="Email"
-									{...register('email', rules.email)}
-								/>
-								<div className="mt-1 min-h-[1.25rem] text-sm text-red-600">{errors.email?.message}</div>
-							</div>
-							<div className="mt-2">
-								<input
-									type="password"
-									autoComplete="on"
-									className="w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm"
-									placeholder="Password"
-									{...register('password', rules.password)}
-								/>
-								<div className="mt-1 min-h-[1.25rem] text-sm text-red-600">{errors.password?.message}</div>
-							</div>
-							<div className="mt-2">
-								<input
-									type="password"
-									autoComplete="on"
-									className="w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm"
-									placeholder="Confirm Password"
-									required
-									{...register('confirm_password', rules.confirm_password)}
-								/>
-								<div className="mt-1 min-h-[1.25rem] text-sm text-red-600">{errors.confirm_password?.message}</div>
-							</div>
+							<Input
+								className="mt-8"
+								name="email"
+								register={register}
+								errorMessage={errors.email?.message}
+								placeholder="Email"
+								rules={rules.email}
+								type="email"
+							/>
+							<Input
+								className="mt-2"
+								name="password"
+								placeholder="Password"
+								autoComplete="on"
+								register={register}
+								errorMessage={errors.password?.message}
+								rules={rules.password}
+								type="password"
+							/>
+							<Input
+								className="mt-2"
+								name="confirm_password"
+								placeholder="Confirm password"
+								register={register}
+								errorMessage={errors.confirm_password?.message}
+								rules={rules.confirm_password}
+								type="password"
+								autoComplete="on"
+							/>
 							<div className="mt-2">
 								<button className="w-full bg-red-500 py-4 px-2 text-center text-sm uppercase text-white hover:bg-red-600">
 									Đăng ký
