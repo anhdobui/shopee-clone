@@ -1,21 +1,18 @@
 import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { yupResolver } from '@hookform/resolvers/yup'
 import Input from 'src/component/Input'
-import { getRules } from 'src/utils/validate'
-interface FormData {
-	email: string
-	password: string
-	confirm_password: string
-}
+import { schema, Schema } from 'src/utils/validate'
+type FormData = Schema
 function Register() {
 	const {
 		register,
 		handleSubmit,
-		getValues,
 		formState: { errors }
-	} = useForm<FormData>()
-	const rules = useMemo(() => getRules(getValues), [getValues])
+	} = useForm<FormData>({
+		resolver: yupResolver(schema)
+	})
 	const onSubmit = handleSubmit((data) => {
 		console.log(data)
 	})
@@ -32,7 +29,6 @@ function Register() {
 								register={register}
 								errorMessage={errors.email?.message}
 								placeholder="Email"
-								rules={rules.email}
 								type="email"
 							/>
 							<Input
@@ -42,7 +38,6 @@ function Register() {
 								autoComplete="on"
 								register={register}
 								errorMessage={errors.password?.message}
-								rules={rules.password}
 								type="password"
 							/>
 							<Input
@@ -51,7 +46,6 @@ function Register() {
 								placeholder="Confirm password"
 								register={register}
 								errorMessage={errors.confirm_password?.message}
-								rules={rules.confirm_password}
 								type="password"
 								autoComplete="on"
 							/>
