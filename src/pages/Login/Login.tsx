@@ -1,21 +1,44 @@
-import { useMemo } from 'react'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import Input from 'src/component/Input'
-import { getRules } from 'src/utils/validate'
-interface FormLogin {
-	email: string
-	password: string
-}
+import { LoginSchema, loginSchema } from 'src/utils/validate'
+import { useMutation } from '@tanstack/react-query'
+import { login } from 'src/apis/auth.api'
+import { isAxiosUnprocessableEntity } from 'src/utils/utils'
+import { ResponseApi } from 'src/types/utils.type'
+type FormLogin = LoginSchema
 function Login() {
 	const {
 		register,
+		setError,
 		handleSubmit,
 		formState: { errors }
-	} = useForm<FormLogin>()
-	const rules = useMemo(() => getRules(), [])
+	} = useForm<FormLogin>({
+		resolver: yupResolver(loginSchema)
+	})
+	const loginMutation = useMutation({
+		mutationFn: (body: FormLogin) => login(body)
+	})
 	const onSubmit = handleSubmit((data) => {
-		console.log(data)
+		loginMutation.mutate(data, {
+			onSuccess: (data) => {
+				console.log(data)
+			},
+			onError: (error) => {
+				if (isAxiosUnprocessableEntity<ResponseApi<FormLogin>>(error)) {
+					const formError = error.response?.data.data
+					if (formError) {
+						Object.keys(formError).forEach((key) => {
+							setError(key as keyof FormLogin, {
+								message: formError[key as keyof FormLogin],
+								type: 'Server'
+							})
+						})
+					}
+				}
+			}
+		})
 	})
 	return (
 		<div className="bg-orange">
@@ -29,7 +52,6 @@ function Login() {
 								name="email"
 								register={register}
 								errorMessage={errors.email?.message}
-								rules={rules.email}
 								placeholder="Email"
 								type="email"
 							/>
@@ -38,7 +60,6 @@ function Login() {
 								name="password"
 								register={register}
 								errorMessage={errors.password?.message}
-								rules={rules.password}
 								placeholder="Password"
 								type="password"
 							/>

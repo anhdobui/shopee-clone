@@ -75,6 +75,6 @@ export const schema = yup.object({
 		.max(160, 'Độ dài không quá 160 kí tự')
 		.oneOf([yup.ref('password')], 'Nhập lại password không khớp')
 })
-const loginSchema = schema.omit(['confirm_password'])
+export const loginSchema = schema.omit(['confirm_password'])
 export type LoginSchema = yup.InferType<typeof loginSchema>
 export type Schema = yup.InferType<typeof schema>
