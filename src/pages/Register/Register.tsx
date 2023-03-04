@@ -1,9 +1,11 @@
-import { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
 import Input from 'src/component/Input'
 import { schema, Schema } from 'src/utils/validate'
+import { registerAccount } from 'src/apis/auth.api'
+import { omit } from 'lodash'
 type FormData = Schema
 function Register() {
 	const {
@@ -13,8 +15,17 @@ function Register() {
 	} = useForm<FormData>({
 		resolver: yupResolver(schema)
 	})
+	const registerAccountMutation = useMutation({
+		mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
+	})
 	const onSubmit = handleSubmit((data) => {
 		console.log(data)
+		const body = omit(data, ['confirm_password'])
+		registerAccountMutation.mutate(body, {
+			onSuccess: (data) => {
+				console.log(data)
+			}
+		})
 	})
 	return (
 		<div className="bg-orange">
