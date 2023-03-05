@@ -14,7 +14,7 @@ import Button from './../../component/Button/Button'
 type FormData = Schema
 function Register() {
 	const navigate = useNavigate()
-	const { setIsAuthenticated } = useContext(AppContext)
+	const { setIsAuthenticated, setProfile } = useContext(AppContext)
 	const {
 		register,
 		handleSubmit,
@@ -29,8 +29,9 @@ function Register() {
 	const onSubmit = handleSubmit((data) => {
 		const body = omit(data, ['confirm_password'])
 		registerAccountMutation.mutate(body, {
-			onSuccess: () => {
+			onSuccess: (data) => {
 				setIsAuthenticated(true)
+				setProfile(data.data.data.user)
 				navigate('/')
 			},
 			onError: (error) => {

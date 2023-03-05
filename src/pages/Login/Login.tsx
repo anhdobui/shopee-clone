@@ -13,7 +13,7 @@ import Button from './../../component/Button/Button'
 type FormLogin = LoginSchema
 function Login() {
 	const navigate = useNavigate()
-	const { setIsAuthenticated } = useContext(AppContext)
+	const { setIsAuthenticated, setProfile } = useContext(AppContext)
 	const {
 		register,
 		setError,
@@ -27,8 +27,9 @@ function Login() {
 	})
 	const onSubmit = handleSubmit((data) => {
 		loginMutation.mutate(data, {
-			onSuccess: () => {
+			onSuccess: (data) => {
 				setIsAuthenticated(true)
+				setProfile(data.data.data.user)
 				navigate('/')
 			},
 			onError: (error) => {
